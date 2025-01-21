@@ -14,6 +14,7 @@ load_dotenv()
 
 class QuotePipeline:
     def __init__(self):
+        self.i = 0
         self.create_connection()
         self.create_table()
         
@@ -29,16 +30,19 @@ class QuotePipeline:
     def create_table(self):
         self.cursor.execute("""DROP TABLE IF EXISTS quotes_tb""")
         self.cursor.execute("""CREATE TABLE quotes_tb(
+            id INT AUTO_INCREMENT PRIMARY KEY,
             title VARCHAR(200),
             author VARCHAR(200),
             tags VARCHAR(200)
         )""")
     
-    def store_db(self, item):
-        self.cursor.execute("""INSERT INTO quotes_tb VALUES (%s, %s, %s)""", (
-            item['title'][0],
-            item['author'][0],
-            item['tags'][0]
+    def store_db(self, item ):
+        self.i += 1
+        self.cursor.execute("""INSERT INTO quotes_tb VALUES (%s , %s, %s, %s)""", (
+            self.i,
+            item.get('title', [''])[0],
+            item.get('author', [''])[0],
+            ','.join(item.get('tags', []))
         ))
         self.conn.commit()
     def process_item(self, item, spider):
