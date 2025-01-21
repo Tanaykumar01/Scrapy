@@ -1,0 +1,4 @@
+response.css("tag.class").extract()
+response.css("tag.class::text)extract()
+response.xpath("//tag[@class='class']/text()").extract()
+response.css("tag.class a").xpath("@href").extract() -> to extract the href link orr all the href links
