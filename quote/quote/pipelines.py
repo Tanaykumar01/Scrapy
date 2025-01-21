@@ -7,6 +7,10 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 import mysql.connector
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class QuotePipeline:
     def __init__(self):
@@ -16,8 +20,8 @@ class QuotePipeline:
     def create_connection(self):
         self.conn = mysql.connector.connect(
             host = 'localhost',
-            user = 'root',
-            passwd = 'Zxcvbnm@123',
+            user = os.getenv('DB_USER'),
+            passwd = os.getenv('DB_PASSWORD'),
             database = 'Quotes'
         )
         self.cursor = self.conn.cursor()
@@ -25,9 +29,9 @@ class QuotePipeline:
     def create_table(self):
         self.cursor.execute("""DROP TABLE IF EXISTS quotes_tb""")
         self.cursor.execute("""CREATE TABLE quotes_tb(
-            title VARCHAR(100),
-            author VARCHAR(100),
-            tags VARCHAR(100)
+            title VARCHAR(200),
+            author VARCHAR(200),
+            tags VARCHAR(200)
         )""")
     
     def store_db(self, item):
