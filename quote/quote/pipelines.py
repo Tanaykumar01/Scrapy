@@ -35,6 +35,13 @@ class QuotePipeline:
             author VARCHAR(200),
             tags VARCHAR(200)
         )""")
+        self.cursor.execute("""DROP TABLE IF EXISTS tag_tb""")
+        self.cursor.execute("""CREATE TABLE tag_tb(
+            tag_id INT AUTO_INCREMENT PRIMARY KEY,
+            tag_name VARCHAR(100),
+            quote_id INT,
+            FOREIGN KEY (quote_id) REFERENCES quotes_tb(id)
+        )""")
     
     def store_db(self, item ):
         self.i += 1
