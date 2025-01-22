@@ -31,7 +31,7 @@ class QuotePipeline:
         self.cursor.execute("""DROP TABLE IF EXISTS quotes_tb""")
         self.cursor.execute("""CREATE TABLE quotes_tb(
             id INT AUTO_INCREMENT PRIMARY KEY,
-            title VARCHAR(200),
+            title VARCHAR(1000),
             author VARCHAR(200),
             tags VARCHAR(200)
         )""")

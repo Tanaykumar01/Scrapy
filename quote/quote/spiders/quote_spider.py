@@ -16,3 +16,7 @@ class QuoteSpider(scrapy.Spider):
             items['author'] = quote.css('span small.author::text').extract()
             items['tags'] = quote.css('div.tags a.tag::text').extract()
             yield items
+            
+        next_page = response.css('li.next a::attr(href)').get()
+        if next_page is not None:
+            yield response.follow(next_page, callback=self.parse)
